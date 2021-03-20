@@ -11,7 +11,7 @@ ConsoleWriter::ConsoleWriter(std::ostream &stream) : outStream(stream){
 
 
 void ConsoleWriter::out(const commandsType & cmds) {
-    outStream << "Bulk: ";
+    outStream << "bulk: ";
     for (const auto& cmd : cmds) {
         outStream << cmd << " ";
     }
