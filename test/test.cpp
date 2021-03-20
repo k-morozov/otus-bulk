@@ -5,10 +5,18 @@
 #include <gtest/gtest.h>
 #include "bulk/Bulk.h"
 
-TEST(CoreTest, exampleFirstTest) {
-    const int count = 3;
+class MainTest : public ::testing::Test {
+protected:
+    void SetUp() {
+        count = 3;
+    }
+
+    int count = 3;
+    std::ostringstream sout;
+};
+
+TEST_F(MainTest, exampleFirstTest) {
     std::istringstream sin("cmd1\ncmd2\ncmd3\n");
-    std::ostringstream sout;
 
     Settings settings(sin, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
@@ -20,10 +28,8 @@ TEST(CoreTest, exampleFirstTest) {
     ASSERT_TRUE(result.compare(expected));
 }
 
-TEST(CoreTest, moreOneBuffer) {
-    const int count = 3;
+TEST_F(MainTest, moreOneBuffer) {
     std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\n");
-    std::ostringstream sout;
 
     Settings settings(sin, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
@@ -35,10 +41,8 @@ TEST(CoreTest, moreOneBuffer) {
     ASSERT_TRUE(result.compare(expected));
 }
 
-TEST(CoreTest, moreTwoBuffer) {
-    const int count = 3;
+TEST_F(MainTest, moreTwoBuffer) {
     std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\n");
-    std::ostringstream sout;
 
     Settings settings(sin, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
@@ -50,10 +54,8 @@ TEST(CoreTest, moreTwoBuffer) {
     ASSERT_TRUE(result.compare(expected));
 }
 
-TEST(CoreTest, moreThreeBuffer) {
-    const int count = 3;
+TEST_F(MainTest, moreThreeBuffer) {
     std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\ncmd6\n");
-    std::ostringstream sout;
 
     Settings settings(sin, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
@@ -65,10 +67,8 @@ TEST(CoreTest, moreThreeBuffer) {
     ASSERT_TRUE(result.compare(expected));
 }
 
-TEST(CoreTest, moreOneBufferOverTwo) {
-    const int count = 3;
+TEST_F(MainTest, moreOneBufferOverTwo) {
     std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\ncmd6\ncmd7\n");
-    std::ostringstream sout;
 
     Settings settings(sin, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
