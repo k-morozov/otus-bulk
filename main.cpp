@@ -1,20 +1,5 @@
 #include <iostream>
-#include <memory>
-#include "writer/Console/ConsoleWriter.h"
-#include "batcher/Batcher.h"
-
-namespace {
-    void RunBulk(int sizeBuffer) {
-        writerPtrType consoleOutput = std::make_shared<ConsoleWriter>();
-        std::unique_ptr<Batcher> batcherPtr = std::make_unique<Batcher>(sizeBuffer);
-        batcherPtr->addOutputs(consoleOutput);
-
-        std::string command;
-        while (std::getline(std::cin, command)) {
-            batcherPtr->addCommand(command);
-        }
-    }
-}
+#include <bulk/Bulk.h>
 
 int main(int argc, char **argv) {
     std::cout << "Hello, World!" << std::endl;
@@ -29,8 +14,12 @@ int main(int argc, char **argv) {
             std::cerr << "Argument is zero" << std::endl;
             exit(EXIT_FAILURE);
         }
+        Settings settings(std::cin, std::cout, std::cout, count);
+        Bulk bulk(settings);
 
-        RunBulk(count);
+        bulk.run();
+
+//        RunBulk(count);
     } catch (std::exception &ex) {
         std::cerr << ex.what() << std::endl;
     }

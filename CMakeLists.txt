@@ -8,6 +8,6 @@ add_executable(otus_bulk
         writer/Writer.h
         writer/Console/ConsoleWriter.cpp
         writer/File/FileWriter.cpp
-        batcher/Batcher.cpp batcher/Batcher.h)
+        batcher/Batcher.cpp batcher/Batcher.h bulk/Bulk.cpp bulk/Bulk.h bulk/SettingsBulk.h)
 
 include_directories(${CMAKE_SOURCE_DIR})

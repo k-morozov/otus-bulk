@@ -5,11 +5,17 @@
 #include <iostream>
 #include "writer/Console/ConsoleWriter.h"
 
-void ConsoleWriter::out(const commandsType & cmds) {
-    std::cout << "Bulk: ";
-    for (const auto& cmd : cmds) {
-        std::cout << cmd << " ";
-    }
-    std::cout << std::endl;
+ConsoleWriter::ConsoleWriter(std::ostream &stream) : outStream(stream){
 
 }
+
+
+void ConsoleWriter::out(const commandsType & cmds) {
+    outStream << "Bulk: ";
+    for (const auto& cmd : cmds) {
+        outStream << cmd << " ";
+    }
+    outStream << std::endl;
+
+}
+
