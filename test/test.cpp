@@ -64,3 +64,18 @@ TEST(CoreTest, moreThreeBuffer) {
 
     ASSERT_TRUE(result.compare(expected));
 }
+
+TEST(CoreTest, moreOneBufferOverTwo) {
+    const int count = 3;
+    std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\ncmd6\ncmd7\n");
+    std::ostringstream sout;
+
+    Settings settings(sin, sout, sout, count);
+    auto bulkPtr = std::make_unique<Bulk>(settings);
+    bulkPtr->run();
+
+    const std::string expected = "bulk: cmd1 cmd2 cmd3\nbulk: cmd4 cmd5 cmd6\n";
+    const std::string result = sout.str();
+
+    ASSERT_TRUE(result.compare(expected));
+}
