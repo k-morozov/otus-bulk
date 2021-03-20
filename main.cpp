@@ -15,11 +15,9 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
         Settings settings(std::cin, std::cout, std::cout, count);
-        Bulk bulk(settings);
+        auto bulkPtr = std::make_unique<Bulk>(settings);
+        bulkPtr->run();
 
-        bulk.run();
-
-//        RunBulk(count);
     } catch (std::exception &ex) {
         std::cerr << ex.what() << std::endl;
     }
