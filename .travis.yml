@@ -19,14 +19,12 @@ matrix:
       before_install:
         - eval "${MATRIX_EVAL}"
       before_script:
-#        - sudo apt install python-pip
         - pip install conan
         - source ~/.profile
-      cache:
-        directories:
-          - googletest/
       script:
         - mkdir -p ${BUILD_DIR}  && cd ${BUILD_DIR}
+        - conan profile new default --detect
+        - conan profile update settings.compiler.libcxx=libstdc++11 default
         - conan install ..
         - cmake ..
         - cmake --build .
