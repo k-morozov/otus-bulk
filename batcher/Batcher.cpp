@@ -32,7 +32,7 @@ void Batcher::addCommand(const std::string &textCommand) {
         auto time = std::chrono::system_clock::now();
         Command command{textCommand, time};
         _buffer.push_back(command);
-        if (_blockStatus == 0 && _buffer.size() == maxSizeBuffer) {
+        if (_blockStatus == 0 && _buffer.size() == static_cast<std::size_t>(maxSizeBuffer)) {
             forcedOutBlock();
         }
     }
