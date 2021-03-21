@@ -5,7 +5,7 @@ project(${APP_TEST})
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(SOURCES test.cpp)
+set(SOURCES main.cpp test.cpp blockTest.cpp)
 
 add_executable(${APP_TEST}
         ${SOURCES}
