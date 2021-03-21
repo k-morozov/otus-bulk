@@ -28,7 +28,8 @@ matrix:
         - conan install ..
         - cmake ..
         - cmake --build .
-        - cmake --build . --target test
+        - ctest --extra-verbose --gtest_color=yes
+#        - cmake --build . --target test
 #        - cmake --build . --target package
 
 #      deploy:

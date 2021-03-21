@@ -16,10 +16,17 @@ public:
     void addOutputs(writerPtrType);
 
     void addCommand(const std::string&);
+
+    virtual ~Batcher();
+
 private:
     std::vector<writerPtrType> _outputs;
     const int maxSizeBuffer;
     commandsType _buffer;
+
+    int _blockStatus;
+
+    void forcedOutBlock();
 };
 
 

@@ -8,7 +8,12 @@
 #include "writer/Writer.h"
 
 class FileWriter : public Writer {
+public:
+    void out(const commandsType &) override;
 
+private:
+//    std::fstream& outStream;
+    std::string getFileName(const Command&);
 };
 
 

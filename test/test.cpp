@@ -13,69 +13,90 @@ protected:
 
     int count = 3;
     std::ostringstream sout;
+    std::stringstream ss;
 };
 
 TEST_F(MainTest, exampleFirstTest) {
-    std::istringstream sin("cmd1\ncmd2\ncmd3\n");
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "cmd3\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2 cmd3\n";
+    const std::string expected = "bulk: cmd1, cmd2, cmd3\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
 TEST_F(MainTest, moreOneBuffer) {
-    std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\n");
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2 cmd3\n";
+    const std::string expected = "bulk: cmd1, cmd2, cmd3\nbulk: cmd4\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
 TEST_F(MainTest, moreTwoBuffer) {
-    std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\n");
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
+    ss << "cmd5\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2 cmd3\n";
+    const std::string expected = "bulk: cmd1, cmd2, cmd3\nbulk: cmd4, cmd5\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
 TEST_F(MainTest, moreThreeBuffer) {
-    std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\ncmd6\n");
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
+    ss << "cmd5\n";
+    ss << "cmd6\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2 cmd3\nbulk: cmd4 cmd5 cmd6\n";
+    const std::string expected = "bulk: cmd1, cmd2, cmd3\nbulk: cmd4, cmd5, cmd6\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
 TEST_F(MainTest, moreOneBufferOverTwo) {
-    std::istringstream sin("cmd1\ncmd2\ncmd3\ncmd4\ncmd5\ncmd6\ncmd7\n");
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
+    ss << "cmd5\n";
+    ss << "cmd6\n";
+    ss << "cmd7\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2 cmd3\nbulk: cmd4 cmd5 cmd6\n";
+    const std::string expected = "bulk: cmd1, cmd2, cmd3\nbulk: cmd4, cmd5, cmd6\nbulk: cmd7\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
