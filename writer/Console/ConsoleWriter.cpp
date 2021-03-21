@@ -12,8 +12,11 @@ ConsoleWriter::ConsoleWriter(std::ostream &stream) : outStream(stream){
 
 void ConsoleWriter::out(const commandsType & cmds) {
     outStream << "bulk: ";
-    for (const auto& cmd : cmds) {
-        outStream << cmd << " ";
+    for (auto it = cmds.begin(); it!=cmds.end(); ++it) {
+        outStream << it->text;
+        if (std::next(it) != cmds.end()) {
+            outStream << ", ";
+        }
     }
     outStream << std::endl;
 

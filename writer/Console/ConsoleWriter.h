@@ -10,7 +10,7 @@
 
 class ConsoleWriter : public Writer {
 public:
-    ConsoleWriter(std::ostream& stream = std::cout);
+    explicit ConsoleWriter(std::ostream& stream = std::cout);
     void out(const commandsType &) override;
 
 private:

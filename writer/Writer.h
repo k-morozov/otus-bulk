@@ -8,9 +8,16 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <chrono>
 
 class Writer;
-using commandsType = std::vector<std::string>;
+
+struct Command {
+    std::string text;
+    std::chrono::system_clock::time_point time;
+};
+
+using commandsType = std::vector<Command>;
 using writerPtrType = std::shared_ptr<Writer>;
 
 class Writer {

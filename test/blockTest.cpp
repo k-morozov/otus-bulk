@@ -13,32 +13,61 @@ protected:
 
     int count = 3;
     std::ostringstream sout;
+    std::stringstream ss;
 };
 
 TEST_F(BlockTest, exampleFromTaskDemo) {
-    std::string text = "cmd1\ncmd2\n{\ncmd3\ncmd4\n}\n{\ncmd5\ncmd6\n{\ncmd7\ncmd8\n}\ncmd9\n}\n";
-    std::istringstream sin(text);
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "{\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
+    ss << "}\n";
+    ss << "{\n";
+    ss << "cmd5\n";
+    ss << "cmd6\n";
+    ss << "{\n";
+    ss << "cmd7\n";
+    ss << "cmd8\n";
+    ss << "}\n";
+    ss << "cmd9\n";
+    ss << "}\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2\nbulk: cmd3 cmd4\nbulk: cmd5 cmd6 cmd7 cmd8 cmd9\n";
+    const std::string expected = "bulk: cmd1, cmd2\nbulk: cmd3, cmd4\nbulk: cmd5, cmd6, cmd7, cmd8, cmd9\n";
     const std::string result = sout.str();
-
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }
 
 TEST_F(BlockTest, exampleFromTask) {
-    std::string text = "cmd1\ncmd2\n{\ncmd3\ncmd4\n}\n{\ncmd5\ncmd6\n{\ncmd7\ncmd8\n}\ncmd9\n}\ncmd10\ncmd11\n";
-    std::istringstream sin(text);
+    ss << "cmd1\n";
+    ss << "cmd2\n";
+    ss << "{\n";
+    ss << "cmd3\n";
+    ss << "cmd4\n";
+    ss << "}\n";
+    ss << "{\n";
+    ss << "cmd5\n";
+    ss << "cmd6\n";
+    ss << "{\n";
+    ss << "cmd7\n";
+    ss << "cmd8\n";
+    ss << "}\n";
+    ss << "cmd9\n";
+    ss << "}\n";
+    ss << "{\n";
+    ss << "cmd10\n";
+    ss << "cmd11\n";
 
-    Settings settings(sin, sout, sout, count);
+    Settings settings(ss, sout, sout, count);
     auto bulkPtr = std::make_unique<Bulk>(settings);
     bulkPtr->run();
 
-    const std::string expected = "bulk: cmd1 cmd2\nbulk: cmd3 cmd4\nbulk: cmd5 cmd6 cmd7 cmd8 cmd9\n";
+    const std::string expected = "bulk: cmd1, cmd2\nbulk: cmd3, cmd4\nbulk: cmd5, cmd6, cmd7, cmd8, cmd9\n";
     const std::string result = sout.str();
 
-    ASSERT_TRUE(result.compare(expected));
+    EXPECT_STREQ(result.c_str(), expected.c_str());
 }

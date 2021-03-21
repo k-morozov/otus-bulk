@@ -2,6 +2,7 @@
 // Created by focus on 20.03.2021.
 //
 
+#include <chrono>
 #include "Batcher.h"
 
 Batcher::Batcher(int count) : maxSizeBuffer(count), _blockStatus(0){
@@ -16,18 +17,20 @@ void Batcher::addOutputs(writerPtrType newOutput) {
     _outputs.push_back(newOutput);
 }
 
-void Batcher::addCommand(const std::string &command) {
-    if (command == "{") {
+void Batcher::addCommand(const std::string &textCommand) {
+    if (textCommand == "{") {
         if (_blockStatus == 0 && !_buffer.empty()) {
             forcedOutBlock();
         }
         ++_blockStatus;
-    } else if (command == "}") {
+    } else if (textCommand == "}") {
         --_blockStatus;
         if (_blockStatus == 0 && !_buffer.empty()) {
             forcedOutBlock();
         }
     } else {
+        auto time = std::chrono::system_clock::now();
+        Command command{textCommand, time};
         _buffer.push_back(command);
         if (_blockStatus == 0 && _buffer.size() == maxSizeBuffer) {
             forcedOutBlock();
