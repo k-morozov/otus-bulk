@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(APP_NAME otus_bulk)
+set(APP_NAME bulk)
 if (DEFINED ENV{TRAVIS_BUILD_NUMBER})
     project(${APP_NAME} VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 else()

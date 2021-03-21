@@ -15,7 +15,7 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
         - BUILD_DIR=build
-        - APP_NAME=otus_bulk
+        - APP_NAME=bulk
       before_install:
         - eval "${MATRIX_EVAL}"
       before_script:
